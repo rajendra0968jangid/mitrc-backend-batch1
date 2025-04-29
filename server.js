@@ -2,11 +2,12 @@ const express = require("express");
 const app = express();
 const { dbConnect } = require("./config/dbConnect.js");
 require("dotenv").config();
-
+const { userRouter } = require("./routes/user.route.js");
 dbConnect();
 
-
 const port = process.env.PORT || 3000;
+
+app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello Rajendra!");
