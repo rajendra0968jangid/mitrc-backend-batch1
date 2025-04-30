@@ -1,16 +1,20 @@
 const { userModel } = require("../models/user.model.js");
+const bcrypt = require("bcrypt");
 
 const createUser = async (req, res) => {
   //
   try {
-    const { name, email, password, phone } = req.body;
-    //console.log(name);
-    //
+    //body se value get karne k liye
+    let { name, email, password, phone } = req.body;
+    //hashed your password
+    let salt = await bcrypt.genSalt(10);
+    password = await bcrypt.hash(password, salt);
+    //db mai user create karni ki query hai
     const newUser = new userModel({ name, email, password, phone });
     const userData = await newUser.save();
-    res.json({message:"user created successfully",data:userData});
+    res.status(200).json({ message: "user created successfully", data: userData });
   } catch (error) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 const getUserAll = async (req, res) => {
