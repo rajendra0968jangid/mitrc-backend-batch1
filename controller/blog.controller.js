@@ -7,7 +7,7 @@ const createBlog = async (req, res) => {
       title,
       description,
       author: req.body.userData,
-      image: "...",
+      image: req.file.filename,
     });
     const blogData = await newBlog.save();
     return response(res, "Blog created successfully", true, blogData);
