@@ -1,7 +1,31 @@
 const { userModel } = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
-
 const { response } = require("../utils/response.js");
+const jwt = require("jsonwebtoken");
+
+const createToken = (id) => {
+  return jwt.sign({ id }, "secret code", { expiresIn: '7d' });
+};
+
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const userData = await userModel.findOne({ email });
+    if (!userData) {
+      return response(res, "User doesn't exist", false);
+    }
+    const isMatch = await bcrypt.compare(password, userData.password);
+
+    if (!isMatch) {
+      return response(res, "Invalid email and password", false);
+    }
+    const token = createToken(userData._id);
+    let obj = { userData, token };
+    return response(res, "User login successfully", true, obj);
+  } catch (error) {
+    return response(res, error.message, false, null, 500);
+  }
+};
 
 const createUser = async (req, res) => {
   //
@@ -16,9 +40,8 @@ const createUser = async (req, res) => {
     const userData = await newUser.save();
 
     return response(res, "user created successfully", true, userData);
-  
   } catch (error) {
-    return response(res, error.message, false,null,500);
+    return response(res, error.message, false, null, 500);
   }
 };
 const getUserAll = async (req, res) => {
@@ -52,6 +75,7 @@ const userUpdateById = async (req, res) => {
 };
 
 module.exports = {
+  loginUser,
   createUser,
   getUserAll,
   getUserById,

@@ -9,12 +9,14 @@ app.use(jsonParser);
 require("dotenv").config();
 
 const { userRouter } = require("./routes/user.route.js");
+const { blogRouter } = require("./routes/blog.route.js");
 
 dbConnect();
 
 const port = process.env.PORT || 3000;
 
 app.use("/user", userRouter);
+app.use("/blog",blogRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello Rajendra!");
