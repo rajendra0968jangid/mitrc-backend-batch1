@@ -6,6 +6,9 @@ const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 app.use(jsonParser);
 
+const cors = require("cors");
+app.use(cors());
+
 require("dotenv").config();
 
 const { userRouter } = require("./routes/user.route.js");
