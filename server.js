@@ -17,7 +17,7 @@ const { blogRouter } = require("./routes/blog.route.js");
 dbConnect();
 
 const port = process.env.PORT || 3000;
-
+app.use("/image",express.static("uploads"));
 app.use("/user", userRouter);
 app.use("/blog",blogRouter);
 
