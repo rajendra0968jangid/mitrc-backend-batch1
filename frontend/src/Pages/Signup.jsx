@@ -25,7 +25,7 @@ function Signup() {
       body: JSON.stringify(formData)
     })
     let jsonResponse = await response.json();
-    alert(jsonResponse?.messsage);
+    alert(jsonResponse?.message);
   }
   return (
     <>

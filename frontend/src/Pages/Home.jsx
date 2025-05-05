@@ -20,7 +20,7 @@ function Home() {
           {blogData.map((item) => (
             <div className='col-12 col-sm-6 col-lg-3 mb-4'>
               <div className="card" style={{ width: "100%" }}>
-                <img src="..." className="card-img-top" alt="..." />
+                <img src={"http://localhost:5000/image/"+item.image} className="card-img-top" alt="..." />
                 <div className="card-body">
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">
